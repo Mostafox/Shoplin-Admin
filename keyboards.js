@@ -40,6 +40,7 @@ const keyboards = {
           Key.callback("📝", `inv.main.edit.${i}`),
         ]);
       }
+      buttons.push([Key.callback("Back", `main.menu`),])
       return Keyboard.make(buttons).inline();
     } else return null;
   },

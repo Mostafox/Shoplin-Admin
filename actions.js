@@ -11,6 +11,9 @@ types = {
 
 const actions = {
   main: {
+    menu: async (ctx) => ctx.editMessageText("منوی اصلی:", keyboards.main).catch(err =>{
+      ctx.reply("منوی اصلی:", keyboards.main)
+    }),
     newProduct: async (ctx) => menus.newProduct.type(ctx),
     inventory: async (ctx) => menus.inventory(ctx),
   },

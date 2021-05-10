@@ -40,7 +40,7 @@ bot.on("text", async (ctx) => {
   if(message.startsWith('/')){
     message = await message.split('/')[1];
     commands[message](ctx);
-    
+    return;
   }
   
 
@@ -67,5 +67,6 @@ bot.on("photo", async (ctx) => {
 });
 
 db.once("open", () => {
+  console.log('mongo connected')
   bot.launch();
 });
