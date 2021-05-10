@@ -14,11 +14,8 @@ const types = {
 
 
 const showProduct = async (ctx, data, keyboard = null) => {
-  let photo;
-  if (parseInt(data.photo) < 9) {
-    photo = DEFAULT_FILE_PIC[types[data.photo]];
-  } else photo = data.photo;
-  const caption = `نام کالا: ${data.name}\nتوضیحات: ${data.description}\nقیمت: ${data.price}`;
+  let photo = parseInt(data.photo) < 9 ? DEFAULT_FILE_PIC[types[data.photo]] : data.photo;
+  const caption = `نام کالا: ${data.name}\nتوضیحات: ${data.description}\nقیمت: ${data.price}\nID: ${data._id}\nLink: https://t.me/Shoplinbot?start=${data._id}`;
   if (keyboard)
     ctx.replyWithPhoto(photo, {
       caption: caption,
