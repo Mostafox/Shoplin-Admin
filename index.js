@@ -39,7 +39,7 @@ bot.on("text", async (ctx) => {
   let message = await ctx.message.text;
   if(message.startsWith('/')){
     message = await message.split('/')[1];
-    commands[message](ctx);
+    await commands[message](ctx);
     return;
   }
   

@@ -34,7 +34,7 @@ const keyboards = {
       let buttons = [];
       for (let i = 0; i < items.length; i++) {
         const element = items[i];
-        buttons.push([
+        buttons.push([  
           Key.callback(element.name, `inv.main.show.${i}`),
           Key.callback("🗑", `inv.main.del.${i}`),
           Key.callback("📝", `inv.main.edit.${i}`),
@@ -50,7 +50,7 @@ const keyboards = {
         [
           Key.callback("🗑 حذف", `inv.show.del.${index}`),
           Key.callback("📝 ویرایش", `inv.show.edit.${index}`),
-        ],
+        ],[Key.callback("Back", `main.menu`)]
       ]).inline();
     },
   },
