@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sanity/client": "^4.0.1",
     "mongoose": "^5.11.9",
     "telegraf": "^3.38.0",
     "telegraf-logger": "^3.0.0",

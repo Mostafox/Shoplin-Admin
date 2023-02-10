@@ -22,7 +22,7 @@ const keyboards = {
     ]).inline(),
 
     photo: Keyboard.make([Key.callback("بدون تصویر", "np.nopic")]).inline(),
-
+    
     final: Keyboard.make([
       Key.callback("تایید نهایی", "np.finalize"),
       Key.callback("انصراف", "np.cancel"),

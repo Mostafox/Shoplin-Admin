@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const uri = "mongodb://localhost:27017/shoplin";
-//const uri = "mongodb+srv://shoplin:Salar123@cluster0.rchjw.mongodb.net/shoplin?retryWrites=true&w=majority";
+//const uri = "mongodb://localhost:27017/shoplin";
+const uri = "mongodb+srv://salar:Salar123@cluster0.tgrlg.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true },(err)=>{
     if(err)
@@ -32,17 +32,21 @@ const Session = mongoose.model('session',SessionSchema);
 
 
 const ProductSchema = new Schema({
+    _id: String,
     user: Number,
     name: String,
     description: String,
     type: Number,
     price: Number,
     photo: String,
+    messageId: Number,
+    paymentUrl: String,
     date_created: { type: Date, default: Date.now }, 
 });
 ProductSchema.statics.new = async function(data){
     await new Product(data).save()
 }
+
 
 const Product = mongoose.model('product',ProductSchema);
 
@@ -54,6 +58,7 @@ const TempProductSchema = new Schema({
     type: String,
     price: String,
     photo: String,
+    paymentUrl: String,
 });
 
 TempProductSchema.statics.addField = async function(ctx,field){
@@ -66,33 +71,41 @@ TempProductSchema.statics.get = async function(ctx){
 TempProductSchema.statics.new = async function(data){
     new TempProduct(data).save();
 } 
-TempProductSchema.statics.saveToProducts =async function(ctx){
-    const temp = await this.get(ctx);
-    const data = {
-        name:String(temp.name),
-        description:String(temp.description),
-        photo:String(temp.photo),
-        type:parseInt(temp.type),
-        user:parseInt(temp.user),
-        price:parseInt(temp.price)
-    };
-    await Product.new(data);
-    await TempProduct.deleteOne({_id:temp._id});
+TempProductSchema.statics.saveToProducts =async function(ctx, mid){
+    try{
+        const temp = await this.get(ctx);
+        const data = {
+            _id: String(temp._id),
+            name:String(temp.name),
+            description:String(temp.description),
+            photo:String(temp.photo),
+            type:parseInt(temp.type),
+            user:parseInt(temp.user),
+            price:parseInt(temp.price),
+            messageId: parseInt(mid),
+            paymentUrl: String(temp.paymentUrl),
+        };
+        await Product.new(data);
+        await TempProduct.deleteOne({_id:temp._id});
+    }catch(error){
+        console.log(error);
+    }
 }
 
 const TempProduct = mongoose.model('temp-product',TempProductSchema);
 
+
+
+
 const Store = new Schema({
     name: String,
     user: Number,
-    gateway: Array,
+    desc: String,
+    supportId: Number,
+    
     
 
 })
-
-
-
-
 
 exports.Session = Session;
 exports.Product = Product;

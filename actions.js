@@ -9,6 +9,8 @@ types = {
   sub: 3,
 };
 
+const productsChannel = -1001852267235;
+
 const actions = {
   main: {
     menu: async (ctx) => ctx.editMessageText("منوی اصلی:", keyboards.main).catch(err =>{
@@ -37,14 +39,16 @@ const actions = {
       menus.newProduct.price(ctx);
     },
     finalize: async (ctx) => {
-      TempProduct.saveToProducts(ctx);
-      ctx.answerCbQuery("کالای جدید با موفقیت ثبت شد!");
-      ctx.deleteMessage();
+      ctx.answerCbQuery("کالای جدید با موفقیت ثبت شد!").catch(err => console.log);
+      const message = await ctx.forwardMessage(productsChannel);
+      console.log(message.message_id);
+      //ctx.deleteMessage();
+      TempProduct.saveToProducts(ctx, message.message_id);
       menus.main(ctx);
     },
     cancel: async (ctx) => {
       TempProduct.deleteOne({ user: ctx.from.id });
-      ctx.answerCbQuery("ثبت کالای جدید لغو شد!");
+      ctx.answerCbQuery("ثبت کالای جدید لغو شد!").catch(err => console.log);
       ctx.deleteMessage();
       menus.main(ctx);
     },

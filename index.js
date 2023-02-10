@@ -54,6 +54,9 @@ bot.on("text", async (ctx) => {
     case "np.price":
       responses.newProduct.price(ctx);
       break;
+    case 'np.payment':
+      responses.newProduct.payment(ctx);
+      break;
   }
 });
 
@@ -66,6 +69,7 @@ bot.on("photo", async (ctx) => {
   }
 });
 
+console.log('Connecting to DB')
 db.once("open", () => {
   console.log('mongo connected')
   bot.launch();
